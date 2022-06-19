@@ -88,7 +88,7 @@ def main():
     scale = 2
     if args.scale:
         scale = float(args.scale)
-    num_cols = 80
+    num_cols = 200
     if args.num_cols:
         num_cols = int(args.num_cols)
     print('generating ASCII art...')
