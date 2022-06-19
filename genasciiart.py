@@ -15,10 +15,9 @@ def get_data(mode):
     char_list = Character[mode]
     return char_list, font,
 
-
-# Making Background Black or White
-
+# Function to create an ascii image from image
 def genAscii(fname, scale, num_cols, outfname):
+    # Making Background Black or White
     bg = "black"
     #bg = "white"
     if bg=="white":
@@ -33,41 +32,25 @@ def genAscii(fname, scale, num_cols, outfname):
     # Reading Input Image
     im= cv2.imread(fname)
 
-    # Converting Color Image to Grayscale
-    #im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     # Extracting height and width from Image
-
     height, width, _ = im.shape
-    # Defining height and width of each cell==pixel
 
+    # Defining height and width of each cell==pixel
     cell_w = width/num_cols
     cell_h = int(scale*cell_w)
     num_rows = int(height/cell_h)
-    # Calculating Height and Width of the output Image
 
+    # Calculating Height and Width of the output Image
     char_w, char_h = font.getsize("A")
     out_width = char_w*num_cols
     out_height = int(char_h*scale*num_rows)
 
 
     # Making a new Image using PIL
-
     out_im = Image.new("RGB", (out_width, out_height), bg_code)
     draw = ImageDraw.Draw(out_im)
 
-    # Mapping the Characters
-    # for i in range(num_rows):
-    #     min_h = min(int((i+1)*cell_h), height)
-    #     row_pix = int(i*cell_h)
-    #     # lst = [i for i in range(5)] => We can make strings/lists/tuples in this way => lst = [0, 1, 2, 3, 4]
-    #     # lst[first:last] gives us a sublist from the first index to the last index excluding the last index => lst[1:4]==[1, 2, 3]
-    #     line = "".join([char_list[min(int(np.mean(im[row_pix:min_h, int(j * cell_w):min(int((j + 1) * cell_w), width)]) / 255 * num_chars), num_chars - 1)]for j in range(num_cols)]) + "\n"
-    #
-    #     # Draw string at a given position (x,y)
-    #     draw.text((0, i*char_h), line, fill = 255-bg_code, font = font)
-
-    #mapping characters for RGB
-
+    # Mapping characters for RGB
     for i in range(num_rows):
         for j in range(num_cols):
             snapshot = im[int(i*cell_h):min(int((i+1)*cell_h), height), int(j*cell_w):min(int((j+1)*cell_w), width),:]
@@ -90,7 +73,8 @@ def genAscii(fname, scale, num_cols, outfname):
 def main():
     descStr = "This program converts an image into ASCII art."
     parser = argparse.ArgumentParser(description=descStr)
-    # add expected arguments
+    # add arguments for input file, output file
+    # scale and number of columns in final image
     parser.add_argument('--file', dest='imgFile', required=True)
     parser.add_argument('--scale', dest='scale', required=False)
     parser.add_argument('--out', dest='outFile', required=False)
