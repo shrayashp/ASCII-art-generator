@@ -183,10 +183,10 @@ def main():
     outFile = 'out.mp4'
     if args.outFile:
         outFile = args.outFile
-    num_cols = 600
+    num_cols = 400
     if args.num_cols:
         num_cols = int(args.num_cols)
-    fps = 6
+    fps = 10
     if args.fps:
         fps = int(args.fps)
     convert_to_frames(vidFile, num_cols)
